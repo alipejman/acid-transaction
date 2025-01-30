@@ -11,6 +11,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     synchronize: true,
     entities: [
         "dist/**/**/**/*.entity{.ts,.js},",
-        "dist/**/**/*.enity{.ts, .js}"
+        "dist/**/**/*.entity{.ts, .js}"
     ],
 }

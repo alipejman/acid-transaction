@@ -10,6 +10,8 @@ export class WalletEntity {
     type: string   
     @Column()
     invoice_number: string;
+    @Column()
+    amount: number;
     @CreateDateColumn()
     created_at: Date;
     @Column()
