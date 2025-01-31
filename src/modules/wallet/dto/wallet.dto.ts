@@ -3,3 +3,8 @@ export class DepositDto {
     mobile: string;
     amount: number
 }
+
+export class withdrawDto {
+    productId: number;
+    userId: number;
+}

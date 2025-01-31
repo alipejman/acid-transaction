@@ -10,12 +10,16 @@ export class WalletEntity {
     type: string   
     @Column()
     invoice_number: string;
-    @Column()
+    @Column({type: "numeric"})
     amount: number;
+    @Column({nullable: true})
+    reason: string;
+    @Column({nullable: true})
+    productId: number;
     @CreateDateColumn()
     created_at: Date;
     @Column()
     userId: number;
     @ManyToMany(() => UserEntity, user => user.transactions, {onDelete: "CASCADE"})
     user: UserEntity[];
-}
+}   

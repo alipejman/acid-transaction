@@ -17,6 +17,12 @@ export class UserService {
         return user;
     }
 
+    async findByMobile(mobile: string) {
+        const user = await this.userRepositorty.findOneBy({mobile});
+        if(!user) throw new NotFoundException('user not found ‼️');
+        return user;
+    }
+
 
     async create(userDto: CreateUserDto) {
         const {mobile} = userDto;

@@ -7,7 +7,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     username: "postgres",
     password: "aliapi",
     database: "ACID",
-    autoLoadEntities: false,
+    autoLoadEntities: true,
     synchronize: true,
     entities: [
         "dist/**/**/**/*.entity{.ts,.js},",
