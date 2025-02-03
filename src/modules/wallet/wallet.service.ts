@@ -27,16 +27,10 @@ export class WalletService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      const { amount, fullname, mobile } = depositDto;
-
-      let user = await this.userService.findByMobile(mobile);
-      if (!user) {
-        user = await this.userService.create({ mobile, fullname });
-      }
-      const userData = await queryRunner.manager.findOne(UserEntity, {
-        where: { id: user.id },
-      });
-      const newBalance = (userData.balance || 0) + amount;
+      const {amount, fullname, mobile } = depositDto;
+      const user = await this.userService.create({mobile, fullname})
+      const userData = await queryRunner.manager.findOneBy(UserEntity, {id: user.id});
+      const newBalance = Number(userData.balance) + Number(amount);
       await queryRunner.manager.update(
         UserEntity,
         { id: user.id },
@@ -48,21 +42,21 @@ export class WalletService {
         invoice_number: Date.now().toString(),
         userId: user.id,
       });
-
       //commit
       await queryRunner.commitTransaction();
+      await queryRunner.release();
     } catch (error) {
+      console.log(error)
       //rollback
       await queryRunner.rollbackTransaction();
-      throw new BadRequestException(error.message);
-    } finally {
       await queryRunner.release();
     }
-
     return {
       message: "payment successfully ✅",
     };
   }
+
+
 
   async paymentWithWallet(withdrawDto: withdrawDto) {
     const queryRunner = this.dataSource.createQueryRunner();
